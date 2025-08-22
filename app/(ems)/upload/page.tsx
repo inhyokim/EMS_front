@@ -18,9 +18,9 @@ export default function UploadPage(){
     mutationFn: async (f: File) => {
       const fd = new FormData();
       fd.append("file", f);
-      const { data } = await api.post("/api/readings/upload", fd, { 
-        headers: { 
-          // Content-Type을 제거하여 브라우저가 자동으로 multipart/form-data 설정
+      const { data } = await api.post("/api/readings/upload", fd, {
+        headers: {
+          "Content-Type": undefined
         }
       });
       return data as UploadRes;

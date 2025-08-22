@@ -19,7 +19,10 @@ export function MeasurementForm() {
     useForm<FormValues>({ resolver: zodResolver(schema) });
 
   const createMut = useMutation({
-    mutationFn: (body: MeasurementCreateDto) => api.post("/api/measurements", body),
+    mutationFn: async (body: MeasurementCreateDto) => {
+      const response = await api.post("/api/measurements", body);
+      return response.data;
+    },
     onSuccess: () => { alert("저장 완료"); reset(); },
   });
 
