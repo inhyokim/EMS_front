@@ -1,0 +1,17 @@
+# OS / IDE
+.DS_Store
+*.log
+*.iml
+.idea/
+.vscode/
+
+# Node.js / React
+/node_modules/
+/dist/
+/build/
+/.next/
+
+# 환경 변수
+.env
+.env.local
+.env.*.local
