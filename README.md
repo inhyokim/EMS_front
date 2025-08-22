@@ -1,173 +1,219 @@
-# EMS Frontend
+# EMS Frontend - Energy Management System
 
 Next.js 14 기반 에너지 관리 시스템 프론트엔드
 
-## 📋 기술 스택
+## 주요 기능
+
+- 대시보드 및 통계 시각화
+- 센서 관리 (CRUD)
+- 측정값 입력 및 조회
+- CSV 파일 업로드
+- 일 평균 지표 및 리포트
+- 반응형 웹 디자인
+- 실시간 데이터 업데이트
+
+## 기술 스택
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
-- **HTTP Client**: Fetch API
+- **HTTP Client**: Axios
+- **State Management**: React Query (TanStack Query)
+- **Form Handling**: React Hook Form + Zod
 - **Package Manager**: npm
 
-## 🏗️ 프로젝트 구조
-
-```
-frontend/
-├── app/                             # Next.js App Router
-│   ├── layout.tsx                   # 루트 레이아웃
-│   ├── page.tsx                     # 대시보드 페이지
-│   ├── devices/
-│   │   └── page.tsx                 # 장치 목록 페이지
-│   └── globals.css                  # 글로벌 스타일
-├── components/                      # 재사용 컴포넌트
-│   ├── Header.tsx                   # 헤더 컴포넌트
-│   ├── Footer.tsx                   # 푸터 컴포넌트
-│   └── DeviceTable.tsx              # 장치 테이블 컴포넌트
-├── lib/                             # 유틸리티 및 설정
-│   ├── types.ts                     # TypeScript 타입 정의
-│   └── apiClient.ts                 # API 클라이언트
-├── public/                          # 정적 파일
-├── .env.local                       # 환경 변수
-├── package.json                     # 의존성 관리
-├── tailwind.config.ts               # Tailwind 설정
-├── tsconfig.json                    # TypeScript 설정
-├── next.config.mjs                  # Next.js 설정
-├── postcss.config.mjs               # PostCSS 설정
-├── .eslintrc.json                   # ESLint 설정
-├── .gitignore                       # Git 무시 파일
-└── README.md                        # 프로젝트 문서
-```
-
-## 🚀 시작하기
+## 빠른 시작
 
 ### 1. 사전 요구사항
-
 - Node.js 18+
 - npm 9+
+- 백엔드 서버 실행 (localhost:8081)
 
 ### 2. 의존성 설치
-
 ```bash
+cd frontend
 npm install
 ```
 
 ### 3. 환경 변수 설정
-
 `.env.local` 파일 생성:
 ```bash
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8081
 ```
 
 ### 4. 개발 서버 실행
-
 ```bash
 npm run dev
 ```
 
-### 5. 접속 정보
+### 5. 접속
+- **URL**: http://localhost:3000
+- **대시보드**: http://localhost:3000/dashboard
+- **센서 관리**: http://localhost:3000/sensors
+- **측정치 입력**: http://localhost:3000/measurements/new
+- **데이터 업로드**: http://localhost:3000/upload
+- **일 평균 지표**: http://localhost:3000/metrics
+- **리포트**: http://localhost:3000/reports
 
-- **Frontend**: http://localhost:3000
-- **Dashboard**: http://localhost:3000/
-- **Devices**: http://localhost:3000/devices
+## 페이지 구성
 
-## 📱 페이지 구성
-
-### Dashboard (/)
+### 대시보드 (/dashboard)
 - 에너지 사용량 통계 카드
-- 최근 활동 타임라인
-- 빠른 액션 버튼
+- 최근 측정값 차트
 - 시스템 상태 모니터링
+- 빠른 액션 버튼
 
-### Devices (/devices)
-- 장치 목록 테이블
+### 센서 관리 (/sensors)
+- 센서 목록 테이블
+- 센서 추가/수정/삭제
 - 실시간 상태 표시
-- 장치별 통계 정보
-- 필터링 및 검색 기능
+- 필터링 및 검색
 
-## 🧩 컴포넌트 가이드
+### 측정치 입력/조회 (/measurements/new)
+- 개별 측정치 입력 폼
+- 기간별 측정치 조회
+- 측정치 데이터 테이블
+- 실시간 데이터 업데이트
 
-### Header
-- Sticky 상단 헤더
-- 네비게이션 메뉴
-- 로고 및 브랜딩
-- 시스템 상태 표시
+### 데이터 업로드 (/upload)
+- CSV 파일 업로드
+- 파일 검증 및 오류 표시
+- 업로드 결과 요약
+- 배치 관리
 
-### Footer
-- 저작권 정보
-- 링크 메뉴
-- 미니멀 디자인
+### 일 평균 지표 (/metrics)
+- 일별 평균 사용량 차트
+- 센서별 통계
+- 기간별 비교 분석
 
-### DeviceTable
-- 클라이언트 사이드 렌더링
-- API 데이터 페칭
-- 로딩 및 에러 상태 처리
-- 반응형 테이블 디자인
+### 리포트 (/reports)
+- 주간/월간 요약 리포트
+- CSV 다운로드
+- 데이터 분석 차트
 
-## 🎨 디자인 시스템
+## 컴포넌트 구조
 
-### 컬러 팔레트
-- **Primary**: Blue (#0ea5e9)
-- **Success**: Green (#10b981)
-- **Warning**: Orange (#f59e0b)
-- **Error**: Red (#ef4444)
-- **Gray Scale**: 50-900
+```
+src/
+├── components/           # 재사용 컴포넌트
+│   ├── MeasurementForm.tsx
+│   ├── MeasurementRange.tsx
+│   ├── SensorForm.tsx
+│   ├── SensorTable.tsx
+│   └── DailyAverageChart.tsx
+├── lib/                  # 유틸리티 및 설정
+│   ├── api.ts           # API 클라이언트
+│   ├── queryClient.tsx  # React Query 설정
+│   └── types.ts         # TypeScript 타입 정의
+└── types/               # 타입 정의
+    └── index.ts
+```
 
-### 타이포그래피
-- **Font Family**: -apple-system, SF Pro Display
-- **Sizes**: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl, text-3xl
+## API 통신
 
-### 간격 시스템
-- **Spacing**: 0.25rem 단위 (4px)
-- **Container**: max-width 1280px
-- **Padding**: px-4 (모바일), px-6 (태블릿), px-8 (데스크톱)
+### API 클라이언트 (`src/lib/api.ts`)
+```typescript
+// 기본 설정
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 15000,
+  headers: { "Content-Type": "application/json" },
+});
 
-### 컴포넌트 클래스
+// 에러 처리
+export const err = (e: any) => e?.response?.data?.error ?? e?.message ?? "Unexpected error";
+```
+
+### 주요 API 호출
+```typescript
+// 센서 목록 조회
+const sensors = await api.get("/api/sensors");
+
+// 측정치 생성
+const measurement = await api.post("/api/measurements", {
+  sensorId: 1,
+  value: 125.5,
+  measuredAt: "2025-08-22T14:30:00Z"
+});
+
+// CSV 업로드
+const formData = new FormData();
+formData.append("file", csvFile);
+const result = await api.post("/api/readings/upload", formData, {
+  headers: { "Content-Type": undefined }
+});
+```
+
+## 데이터 타입
+
+### 센서 (Sensor)
+```typescript
+interface Sensor {
+  id: number;
+  sensorName: string;
+  type: string;
+  location: Location;
+}
+```
+
+### 측정치 (Measurement)
+```typescript
+interface Measurement {
+  id: number;
+  sensor: Sensor;
+  value: number;
+  measuredAt: string;
+}
+```
+
+### 측정치 생성 DTO
+```typescript
+interface MeasurementCreateDto {
+  sensorId: number;
+  value: number;
+  measuredAt?: string;
+}
+```
+
+## 사용 예시
+
+### 측정치 입력
+1. **Sensor ID**: 1 (MAIN_FEEDER - B1 전기실)
+2. **Value**: 125.5
+3. **Measured At**: 2025-08-22T14:30:00Z (선택사항)
+
+### CSV 업로드
+1. CSV 파일 준비 (building_name, zone_name, meter_no, timestamp, value 헤더)
+2. 파일 선택
+3. 업로드 버튼 클릭
+4. 결과 확인
+
+## 스타일링
+
+### Tailwind CSS 클래스
 ```css
 /* 버튼 */
-.btn-primary, .btn-secondary, .btn-danger
-
-/* 카드 */
-.card, .card-hover
+.btn, .btn-danger
 
 /* 입력 필드 */
-.input, .input-error
+.input
 
-/* 배지 */
-.badge-success, .badge-warning, .badge-error, .badge-info
+/* 카드 */
+.border.rounded-xl.bg-white
 
 /* 테이블 */
-.table (th, td 스타일 포함)
+.table.w-full.border-separate
 ```
 
-## 📡 API 통신
+### 반응형 디자인
+- 모바일 우선 설계
+- Tailwind CSS 브레이크포인트 활용
+- 터치 친화적 인터페이스
 
-### API Client (`lib/apiClient.ts`)
-- 타입 안전한 HTTP 클라이언트
-- 에러 처리 및 응답 변환
-- 환경별 베이스 URL 설정
+## 개발 도구
 
-### 주요 API 메서드
-```typescript
-// Device API
-apiClient.devices.getAll()
-apiClient.devices.getById(id)
-apiClient.devices.create(device)
-
-// Energy Reading API  
-apiClient.readings.getByDateRange(params)
-apiClient.readings.create(reading)
-```
-
-### 타입 정의 (`lib/types.ts`)
-- `Device`: 장치 정보
-- `EnergyReading`: 에너지 사용량
-- `ApiResponse<T>`: 공통 API 응답 형식
-
-## 🛠️ 개발 도구
-
-### 빌드 및 배포
+### 스크립트
 ```bash
 # 개발 서버
 npm run dev
@@ -188,54 +234,328 @@ npm run lint
 ### 코드 품질
 - **ESLint**: 코드 스타일 및 오류 검사
 - **TypeScript**: 정적 타입 검사
-- **Prettier**: 코드 포맷팅 (설정 가능)
+- **Prettier**: 코드 포맷팅
 
-## 📱 반응형 디자인
+## 문제 해결
 
-### 브레이크포인트
-- **sm**: 640px+ (모바일)
-- **md**: 768px+ (태블릿)
-- **lg**: 1024px+ (데스크톱)
-- **xl**: 1280px+ (대형 데스크톱)
+### 1. CORS 오류
+- 백엔드 서버가 실행 중인지 확인
+- `NEXT_PUBLIC_API_BASE_URL` 환경 변수 확인
+- 백엔드 CORS 설정 확인
 
-### 모바일 우선 설계
-- 모든 컴포넌트는 모바일부터 설계
-- 터치 친화적인 인터페이스
-- 가독성 중심의 타이포그래피
+### 2. API 연결 오류
+```bash
+# 백엔드 헬스체크
+curl http://localhost:8081/api/health
 
-## 🔧 커스터마이징
+# 프론트엔드 환경 변수 확인
+cat .env.local
+```
 
-### Tailwind 확장
-`tailwind.config.ts`에서 커스텀 스타일 추가:
-- 컬러 팔레트 확장
-- 폰트 family 설정
-- 커스텀 애니메이션
-- 그림자 및 여백 시스템
+### 3. 빌드 오류
+```bash
+# 의존성 재설치
+rm -rf node_modules package-lock.json
+npm install
 
-### 컴포넌트 추가
-1. `components/` 폴더에 새 컴포넌트 생성
-2. TypeScript 타입 정의
-3. Tailwind 클래스 활용
-4. 재사용 가능한 구조로 설계
+# 캐시 클리어
+npm run build -- --no-cache
+```
 
-## 🚀 성능 최적화
+### 4. 타입 오류
+```bash
+# TypeScript 타입 체크
+npm run type-check
 
-### Next.js 기능 활용
+# 타입 정의 업데이트
+npm run build
+```
+
+## 배포
+
+### Vercel 배포
+1. GitHub 저장소 연결
+2. 환경 변수 설정
+3. 자동 배포 설정
+
+### Docker 배포
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+### 환경 변수
+- `NEXT_PUBLIC_API_BASE_URL`: 백엔드 API URL
+- `NODE_ENV`: 실행 환경 (development, production)
+
+## 성능 최적화
+
+### Next.js 기능
 - **App Router**: 최신 라우팅 시스템
 - **Server Components**: 서버 사이드 렌더링
 - **Image Optimization**: 자동 이미지 최적화
 - **Bundle Optimization**: 자동 코드 분할
 
 ### 클라이언트 최적화
+- React Query를 통한 캐싱
 - 컴포넌트 지연 로딩
-- API 응답 캐싱
-- 이미지 최적화
 - 불필요한 리렌더링 방지
+- 이미지 최적화
 
-## 🔒 보안
+## 보안
 
 - 환경 변수를 통한 설정 관리
 - CSRF 보호 (Next.js 기본 제공)
 - XSS 방지 (React 기본 제공)
 - 클라이언트 사이드 입력 검증
+- API 키 보안 관리
+```
+
+이제 루트 README도 업데이트하겠습니다:
+
+```markdown:README.md
+# EMS - Energy Management System
+
+KT 스마트빌딩 EMS Lite 시스템
+
+## 프로젝트 개요
+
+에너지 관리 시스템(EMS)은 건물의 에너지 사용량을 모니터링하고 관리하는 웹 애플리케이션입니다. 센서 데이터 수집, CSV 파일 업로드, 측정치 입력, 리포트 생성 등의 기능을 제공합니다.
+
+## 시스템 아키텍처
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │    Backend      │    │   Database      │
+│   (Next.js)     │◄──►│  (Spring Boot)  │◄──►│   (H2/PostgreSQL)│
+│   localhost:3000│    │  localhost:8081 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+## 주요 기능
+
+###  대시보드
+- 실시간 에너지 사용량 모니터링
+- 센서별 상태 표시
+- 최근 활동 타임라인
+
+###  센서 관리
+- 센서 등록/수정/삭제
+- 위치별 센서 그룹화
+- 실시간 센서 상태 모니터링
+
+###  측정치 관리
+- 개별 측정치 입력
+- 기간별 측정치 조회
+- 실시간 데이터 업데이트
+
+###  데이터 업로드
+- CSV 파일 업로드 및 검증
+- 배치 처리 및 오류 관리
+- 업로드 결과 요약
+
+###  리포트
+- 주간/월간 에너지 사용량 리포트
+- CSV 다운로드 기능
+- 데이터 분석 차트
+
+## 기술 스택
+
+### Frontend
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React Query (TanStack Query)
+- **Form Handling**: React Hook Form + Zod
+- **Icons**: Lucide React
+
+### Backend
+- **Framework**: Spring Boot 3.3.5
+- **Language**: Java 17
+- **Database**: H2 (개발), PostgreSQL (운영)
+- **ORM**: Spring Data JPA
+- **API**: RESTful API
+- **Build Tool**: Maven
+
+## 빠른 시작
+
+### 1. 저장소 클론
+```bash
+git clone <repository-url>
+cd ems
+```
+
+### 2. 백엔드 실행
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+### 3. 프론트엔드 실행
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 4. 접속
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8081
+- **H2 Console**: http://localhost:8081/h2-console
+
+## 사용 가이드
+
+### 측정치 입력
+1. **Sensor ID**: 1 (MAIN_FEEDER), 2 (CHILLER_TEMP)
+2. **Value**: 측정값 (숫자)
+3. **Measured At**: 측정 시간 (ISO-8601 형식, 선택사항)
+
+### CSV 업로드
+1. CSV 파일 준비 (building_name, zone_name, meter_no, timestamp, value 헤더)
+2. 파일 선택 후 업로드
+3. 검증 결과 확인
+
+### 센서 관리
+1. 센서 목록에서 센서 선택
+2. 센서 정보 수정 또는 삭제
+3. 새로운 센서 추가
+
+## API 문서
+
+### 주요 엔드포인트
+- `GET /api/health` - 헬스체크
+- `GET /api/sensors` - 센서 목록
+- `POST /api/measurements` - 측정치 생성
+- `POST /api/readings/upload` - CSV 업로드
+- `GET /api/reports/summary` - 리포트 요약
+
+### 예시 요청
+```bash
+# 측정치 생성
+curl -X POST http://localhost:8081/api/measurements \
+  -H "Content-Type: application/json" \
+  -d '{"sensorId": 1, "value": 125.5}'
+
+# 센서 목록 조회
+curl http://localhost:8081/api/sensors
+
+# 헬스체크
+curl http://localhost:8081/api/health
+```
+
+## 개발 가이드
+
+### 프로젝트 구조
+```
+ems/
+├── backend/           # Spring Boot 백엔드
+│   ├── src/
+│   ├── pom.xml
+│   └── README.md
+├── frontend/          # Next.js 프론트엔드
+│   ├── src/
+│   ├── package.json
+│   └── README.md
+├── infra/            # 인프라 설정
+│   └── docker-compose.yml
+└── README.md         # 프로젝트 문서
+```
+
+### 개발 환경 설정
+1. **Java 17** 설치
+2. **Node.js 18+** 설치
+3. **Maven** 설치 (선택사항, Maven Wrapper 사용)
+4. **Git** 설치
+
+### 코드 스타일
+- **Backend**: Google Java Style Guide
+- **Frontend**: ESLint + Prettier
+- **TypeScript**: Strict Mode
+
+## 배포
+
+### 개발 환경
+```bash
+# 백엔드
+cd backend && ./mvnw spring-boot:run
+
+# 프론트엔드
+cd frontend && npm run dev
+```
+
+### 운영 환경
+```bash
+# Docker Compose
+docker compose -f infra/docker-compose.yml up -d
+
+# 또는 개별 배포
+# Backend
+cd backend && ./mvnw clean package
+java -jar target/ems-backend-0.0.1-SNAPSHOT.jar
+
+# Frontend
+cd frontend && npm run build && npm start
+```
+
+## 문제 해결
+
+### 일반적인 문제
+1. **포트 충돌**: 8081, 3000 포트 사용 확인
+2. **CORS 오류**: 백엔드 CORS 설정 확인
+3. **데이터베이스 연결**: H2/PostgreSQL 연결 확인
+4. **API 오류**: 백엔드 로그 확인
+
+### 로그 확인
+```bash
+# 백엔드 로그
+tail -f backend/logs/application.log
+
+# 프론트엔드 로그
+# 브라우저 개발자 도구 콘솔
+```
+
+## 기여 가이드
+
+1. Fork 저장소
+2. 기능 브랜치 생성
+3. 변경사항 커밋
+4. Pull Request 생성
+
+## 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+
+## 연락처
+
+- **개발팀**: KT EMS 개발팀
+- **이메일**: ems-dev@kt.com
+- **문서**: [Wiki](https://github.com/kt/ems/wiki)
+```
+
+이제 각 README 파일이 최신 상태로 업데이트되었습니다. 주요 변경사항:
+
+### Backend README
+- 최신 기능 및 기술 스택 반영
+- 상세한 API 문서 추가
+- 문제 해결 가이드 개선
+- 개발 가이드 추가
+
+### Frontend README
+- Next.js 14 App Router 반영
+- React Query, React Hook Form 등 최신 라이브러리 반영
+- 상세한 컴포넌트 구조 설명
+- API 통신 예시 추가
+
+### Root README
+- 전체 시스템 아키텍처 개요
+- 빠른 시작 가이드
+- 사용 가이드 추가
+- 배포 및 문제 해결 가이드
+```
 
